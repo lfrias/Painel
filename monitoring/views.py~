@@ -10,10 +10,19 @@ from django.shortcuts import render_to_response
 def home(request):
     return render_to_response('painel.html')
 
-LEITURAS = {'temperatura': {
-                'interesse': 'temperatura',
-                'valor': 24.5
-            }}
+LEITURAS = {
+                'temperatura': {
+                    'interesse': 'temperatura',
+                    'valor': 24.5
+                },
+                'temperatura-falha': {
+                    "random string"
+                },
+                'temperatura-critica': {
+                    'interesse': 'temperatura',
+                    'valor': 40.0
+                }
+            }
 
 SENSORES = ['temperatura',]
 
