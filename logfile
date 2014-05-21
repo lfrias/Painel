@@ -1,0 +1,54 @@
+[21/May/2014 12:10:39] DEBUG [monitoring.views:210] ERROR: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 207, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in _parse
+    leitura = self.get_leitura()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 198, in get_leitura
+    return LEITURAS[self.interesse]
+TypeError: unhashable type: 'dict'
+
+[21/May/2014 12:10:39] DEBUG [monitoring.views:210] ERROR: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 207, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in _parse
+    leitura = self.get_leitura()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 198, in get_leitura
+    return LEITURAS[self.interesse]
+TypeError: unhashable type: 'dict'
+
+[21/May/2014 12:10:39] DEBUG [monitoring.views:210] ERROR: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 207, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in _parse
+    leitura = self.get_leitura()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 198, in get_leitura
+    return LEITURAS[self.interesse]
+TypeError: unhashable type: 'dict'
+
+[21/May/2014 12:16:15] DEBUG [monitoring.views:213] ERROR: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 210, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 204, in _parse
+    leitura = self.get_leitura()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in get_leitura
+    return LEITURAS[self.interesse]
+TypeError: unhashable type: 'dict'
+
+[21/May/2014 12:16:15] DEBUG [monitoring.views:213] ERROR: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 210, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 204, in _parse
+    leitura = self.get_leitura()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in get_leitura
+    return LEITURAS[self.interesse]
+TypeError: unhashable type: 'dict'
+
+[21/May/2014 12:16:15] DEBUG [monitoring.views:213] ERROR: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 210, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 204, in _parse
+    leitura = self.get_leitura()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in get_leitura
+    return LEITURAS[self.interesse]
+TypeError: unhashable type: 'dict'
+
