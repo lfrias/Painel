@@ -1,54 +1,424 @@
-[21/May/2014 12:10:39] DEBUG [monitoring.views:210] ERROR: Traceback (most recent call last):
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 207, in parse
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
     self._parse()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in _parse
-    leitura = self.get_leitura()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 198, in get_leitura
-    return LEITURAS[self.interesse]
-TypeError: unhashable type: 'dict'
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
 
-[21/May/2014 12:10:39] DEBUG [monitoring.views:210] ERROR: Traceback (most recent call last):
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 207, in parse
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 4.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.1
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.4: [1, 1]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 4.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.2
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.4: [1]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
     self._parse()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in _parse
-    leitura = self.get_leitura()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 198, in get_leitura
-    return LEITURAS[self.interesse]
-TypeError: unhashable type: 'dict'
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
 
-[21/May/2014 12:10:39] DEBUG [monitoring.views:210] ERROR: Traceback (most recent call last):
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 207, in parse
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 4.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.1
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.4: [1, 1]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 4.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.2
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.4: [1]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
     self._parse()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in _parse
-    leitura = self.get_leitura()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 198, in get_leitura
-    return LEITURAS[self.interesse]
-TypeError: unhashable type: 'dict'
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
 
-[21/May/2014 12:16:15] DEBUG [monitoring.views:213] ERROR: Traceback (most recent call last):
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 210, in parse
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 4.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.1
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.4: [1, 1]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 4.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.2
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.4: [1]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 2.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 2.1
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Crítico
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Aguardo de Condições
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.2: [4, 1, 1]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Crítico
+[22/May/2014 13:29:22] DEBUG [monitoring.views:166] Sensores para módulo 2.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:22] DEBUG [monitoring.views:87] Definindo estado para o módulo 2.2
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.2: [2]
+[22/May/2014 13:29:22] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:22] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:22] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
     self._parse()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 204, in _parse
-    leitura = self.get_leitura()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in get_leitura
-    return LEITURAS[self.interesse]
-TypeError: unhashable type: 'dict'
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
 
-[21/May/2014 12:16:15] DEBUG [monitoring.views:213] ERROR: Traceback (most recent call last):
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 210, in parse
+[22/May/2014 13:29:22] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:22] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
     self._parse()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 204, in _parse
-    leitura = self.get_leitura()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in get_leitura
-    return LEITURAS[self.interesse]
-TypeError: unhashable type: 'dict'
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
 
-[21/May/2014 12:16:15] DEBUG [monitoring.views:213] ERROR: Traceback (most recent call last):
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 210, in parse
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
     self._parse()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 204, in _parse
-    leitura = self.get_leitura()
-  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 201, in get_leitura
-    return LEITURAS[self.interesse]
-TypeError: unhashable type: 'dict'
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 2.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 2.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Crítico
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.2: [4, 1, 1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Crítico
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 2.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 2.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.2: [2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.4: [1, 1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.4: [1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.4: [1, 1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.4: [1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.4: [1, 1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.4: [1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.4: [1, 1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.4: [1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.1: {'temperatura': {'valor': '24.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.1: [2, 2, 2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 1.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}, 'umidade': {'valor': '20%', 'interesse': 'umidade-interesse'}, 'fumaca': set(['random'])}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 1.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.1: [2, 3, 3]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.4: [1, 1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 4.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 4.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.4: [1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 2.1: {'temperatura': {'valor': '25.5', 'interesse': 'temperatura'}, 'umidade': {'valor': '30%', 'interesse': 'umidade'}, 'fumaca': {'valor': 'true', 'interesse': 'fumaca'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 2.1
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Crítico
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Aguardo de Condições
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 1.2: [4, 1, 1]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Crítico
+[22/May/2014 13:29:44] DEBUG [monitoring.views:166] Sensores para módulo 2.2: {'temperatura': {'valor': '20', 'interesse': 'temperatura'}}
+[22/May/2014 13:29:44] DEBUG [monitoring.views:87] Definindo estado para o módulo 2.2
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor temperatura: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:153] Pesos dos sensores do módulo 2.2: [2]
+[22/May/2014 13:29:44] DEBUG [monitoring.views:104] Estado do módulo atualizado para: Ativo
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor umidade: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:218] ERROR: interesse umidade-interesse não é o mesmo da API umidade
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
+
+[22/May/2014 13:29:44] DEBUG [monitoring.views:190] Estado para o sensor fumaca: Falha de Operação
+[22/May/2014 13:29:44] DEBUG [monitoring.views:215] ERROR: a leitura retornada não pôde ser traduzida.                     
+ Leitura: set(['random']) 
+ Erro: Traceback (most recent call last):
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 211, in parse
+    self._parse()
+  File "/Users/lfrias/Dropbox/Faculdade/ESOO/Painel de Controle/painel/monitoring/views.py", line 202, in _parse
+    self.name = self.leitura['interesse']
+TypeError: 'set' object has no attribute '__getitem__'
 
