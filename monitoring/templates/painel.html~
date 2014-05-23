@@ -143,9 +143,9 @@
                                 </div>
                                 <div class="panel-body sala-body">
                                     <ul class="list-unstyled">
-                                        {% for sensor, valores in sala.condicoes_operacao %}
+                                        {% for sensor, valores in sala.condicoes_operacao.items %}
                                         <li>
-                                        {{ sensor }} : {{ valores }}
+                                        {{ sensor }} : {{ valores.valor }}
                                         </li>
                                         {% endfor %}
                                     </ul>
@@ -158,7 +158,7 @@
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="salas">
 
                     <div class="row placeholders">
-                        {% for sala in salas2 %}
+                        {% for sala in salas %}
                             {% if forloop.counter|divisibleby:5 %}
                                 </div>
                                 <div class="row placeholders">

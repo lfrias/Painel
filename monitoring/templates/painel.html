@@ -143,9 +143,9 @@
                                 </div>
                                 <div class="panel-body sala-body">
                                     <ul class="list-unstyled">
-                                        {% for sensor, valores in sala.condicoes_operacao %}
+                                        {% for sensor, valores in sala.condicoes_operacao.items %}
                                         <li>
-                                        {{ sensor }} : {{ valores }}
+                                        {{ sensor }} : {{ valores.valor }}
                                         </li>
                                         {% endfor %}
                                     </ul>
