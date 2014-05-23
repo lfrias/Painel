@@ -32,7 +32,7 @@ class TestSensor(TestCase):
     def test_json(self):
         obj = Sensor('temperatura', 1, 1)
         json = obj.to_json()
-        self.assertEquals(sorted(json.keys()), sorted(['nome', 'valor']))
+        self.assertEquals(sorted(json.keys()), sorted(['nome', 'valor', 'estado']))
 
 class TestSala(TestCase):
 
@@ -98,5 +98,5 @@ class TestModulo(TestCase):
     def test_json(self):
         modulo = Sala(1).get_modulo(1)
         json = modulo.to_json()
-        self.assertEquals(sorted(json.keys()), sorted(['label', 'sensores', 'peso', 'style']))
+        self.assertEquals(sorted(json.keys()), sorted(['label', 'sensores', 'estado', 'style']))
 

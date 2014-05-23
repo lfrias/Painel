@@ -10,6 +10,7 @@ from bd import BD, LEITURAS
 
 def home(request):
     salas = [Sala(i).to_json() for i in BD.keys()]
+    salas = sorted(salas, key=lambda k: k['peso'], reverse=True)
     return render_to_response('painel.html', {'salas': salas})
 
 ATIVO = 0
@@ -123,12 +124,14 @@ class Sala:
         self.condicoes = BD[self.id]['condicoes']
 
     def to_json(self):
+        modulos = [ m.to_json() for m in self.modulos ]
+        modulos = sorted(modulos, key=lambda k: k['estado']['peso'], reverse=True)
         return {
                 'label': self.get_nome(),
                 'link_to_mapa': self.get_mapa_link(),
                 'peso': self.get_peso(),
                 'condicoes_operacao': self.condicoes,
-                'modulos': [ m.to_json() for m in self.modulos ]
+                'modulos': modulos
                 }
 
 def get_estado_por_peso(peso):
@@ -168,15 +171,15 @@ class Modulo:
         return sensores
 
     def to_json(self):
+        sensores = [l.to_json() for l in self.leituras]
+        sensores = sorted(sensores, key=lambda k: k['estado']['peso'], reverse=True)
         return {
                 'label': u'Módulo %02d' % self.id,
-                'peso': self.get_peso(),
+                'estado': self.estado,
                 'style': {
                     'cor': self.estado['cor']
                     },
-                'sensores': [
-                        l.to_json() for l in self.leituras
-                    ]
+                'sensores': sensores
                 }
 
 class Sensor:
@@ -222,5 +225,6 @@ class Sensor:
     def to_json(self):
         return {
                 'nome': self.name,
-                'valor': self.value
+                'valor': self.value,
+                'estado': self.estado
                 }
