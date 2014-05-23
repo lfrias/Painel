@@ -90,14 +90,37 @@
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Filtros</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-unstyled">
+                            <li><span class="label label-danger">Crítico</span> <p>O módulo detectou uma situação crítica (ex.: temperatura acima do especificado para a sala)</p></li>
+                            <li><span class="label label-warning">Falha de Operacão</span> <p>O módulo falhou. Pode ter ocorrido por problema da rede, problema no módulo e outros motivos.</p> </li>
+                            <li><span class="label label-success">Ativo</span> <p>O módulo está operando normalmente, dentro dos limites de operação.</p></li>
+                            <li><span class="label label-info">Aguardando definição</span> <p>As condições de operação ainda não foram definidas para a sala em que o módulo está contido. Esses módulos nunca alertarão para uma situação de risco, já que eles não sabem as condições de operação que devem esperar.</p></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
                         <li>
-                            <a href="#">
+                            <a href="#" style="color: #727272">
                                 Filtrar por módulo:
-                                <button type="button" class="btn btn-default btn-sm">
+                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
                                      <span class="glyphicon glyphicon-question-sign"></span>
                                 </button>
                             </a>
@@ -160,11 +183,15 @@
                                                 </div>
                                             </div>
                                         </li>
+                                        {% empty %}
+                                        <h5><span class="label label-info">Aviso</span> Esta sala não possui módulos cadastrados. Você deve cadastrá-los <a href="#">aqui</a></h5>
                                         {% endfor %}
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        {% empty %}
+                        <h3><span class="label label-info">Aviso</span> Não foram encontradas salas no sistema</h3>
                         {% endfor %}
                     </div>
 
@@ -203,10 +230,10 @@
             $(document).mouseup(function (e){
                 var sala_id = $( "body" ).data('sala-selecionada');
                 if (!sala_id) return false;
-                var container = $('#' + sala_id);
+                var container_1 = $('#' + sala_id);
                 // If the target of the click isn't the container
                 // ... nor a descendant of the container
-                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                if (!container_1.is(e.target) && container_1.has(e.target).length === 0) {
                     Sala.hide_condicoes(sala_id);
                 }
             });

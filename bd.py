@@ -157,5 +157,24 @@ BD = {
                 }
             },
             },
+        5: {
+            'name': 'H-219',
+            'condicoes': {
+                'temperatura': {
+                    'type': 'range',
+                    'valor': [10.0, 30.0]
+                },
+            },
+            'modulos': {
+                1: {
+                    'sensores': {
+                        'temperatura': {
+                            'interesse': 'temperatura',
+                            'valor': '20'
+                        }
+                    }
+                }
+            },
+            },
         }
 
