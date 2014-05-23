@@ -29,9 +29,20 @@
             div#salas {
                 overflow: scroll;
             }
+            div.sala > div.panel {
+                cursor: pointer;
+                margin-top: 8px;
+            }
             div.sala-body {
                 max-height: 280px;
                 overflow: scroll;
+            }
+            div.sala-selecionada > div.panel {
+                -webkit-box-shadow: 0 0 5px 6px rgba(0, 0, 0, .4);
+                box-shadow: 0 0 5px 6px rgba(0, 0, 0, .4);
+            }
+            div.sala-selecionada > div.panel > div.panel-heading {
+                background-color: #C9C9C9;
             }
             .nav-sidebar > li > div.panel {
                 margin-right: 20px;
@@ -100,7 +111,7 @@
                     </ul>
                     <ul class="nav nav-sidebar condicoes">
                         {% for sala in salas %}
-                        <li class="hidden" id="condicoes-{{ sala.id }}">
+                        <li class="hidden" id="condicoes-sala-{{ sala.id }}">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">
@@ -125,7 +136,7 @@
 
                     <div class="row placeholders" id="salas">
                         {% for sala in salas %}
-                        <div class="col-xs-6 col-sm-3 placeholder {{ sala.html_class }}" id="sala-{{ sala.id }}">
+                        <div class="col-xs-6 col-sm-3 placeholder sala {{ sala.html_class }}" id="sala-{{ sala.id }}">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">
@@ -168,6 +179,38 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
         <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
+        <script type="text/javascript">
+
+            var Sala = {
+                show_condicoes: function(sala_id) {
+                    $('#' + sala_id).addClass('sala-selecionada');
+                    $( "body" ).data('sala-selecionada', sala_id);
+                    var condicoes_id = "#condicoes-" + sala_id;
+                    $(condicoes_id).removeClass('hidden');
+                },
+                hide_condicoes: function(sala_id) {
+                    $('#' + sala_id).removeClass('sala-selecionada');
+                    var condicoes_id = "#condicoes-" + sala_id;
+                    $(condicoes_id).addClass('hidden');
+                    $( "body" ).data('sala-selecionada', null);
+                }
+            };
+
+            $("div.sala").click(function(){
+                var sala_id = $(this).attr('id');
+                Sala.show_condicoes(sala_id);
+            });
+            $(document).mouseup(function (e){
+                var sala_id = $( "body" ).data('sala-selecionada');
+                if (!sala_id) return false;
+                var container = $('#' + sala_id);
+                // If the target of the click isn't the container
+                // ... nor a descendant of the container
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    Sala.hide_condicoes(sala_id);
+                }
+            });
+        </script>
     </body>
 </html>
 
