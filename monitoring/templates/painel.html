@@ -91,7 +91,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">
-                                        <a href={{ sala.get_map_link }}>{{ sala.nome }}</a>
+                                        <a href={{ sala.link_to_mapa }}>{{ sala.label }}</a>
                                     </h3>
                                 </div>
                                 <div class="panel-body sala-body">
@@ -102,8 +102,8 @@
                                                 <div class="panel-heading">{{ modulo.label }}</div>
                                                 <div class="panel-body">
                                                     <ul class="list-unstyled">
-                                                        {% for sensor in modulos.leituras %}
-                                                        <li>{{ sensor.interesse }}: {{ sensor.valor}}</li>
+                                                        {% for sensor in modulo.sensores %}
+                                                        <li>{{ sensor.nome }}: {{ sensor.valor}}</li>
                                                         {% endfor %}
                                                       </ul>
                                                 </div>
