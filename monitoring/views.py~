@@ -10,6 +10,7 @@ from bd import BD, LEITURAS
 
 def home(request):
     salas = [Sala(i).to_json() for i in BD.keys()]
+    salas = sorted(salas, key=lambda k: k['peso'], reverse=True)
     return render_to_response('painel.html', {'salas': salas})
 
 ATIVO = 0
@@ -23,22 +24,22 @@ ATIVO_SALA = 1
 ESTADOS_MODULOS = {
         AGUARDO_DE_CONDICOES: {
             'label': u'Aguardo de Condições',
-            'cor': 'blue',
+            'html_class': 'aguardo-de-condicoes',
             'peso': 1
             },
         ATIVO: {
             'label': u'Ativo',
-            'cor': 'green',
+            'html_class': 'ativo',
             'peso': 2
             },
         FALHA_DE_OPERACAO: {
             'label': u'Falha de Operação',
-            'cor': 'yellow',
+            'html_class': 'falha-operacao',
             'peso': 3
             },
         CRITICO: {
             'label': u'Crítico',
-            'cor': 'red',
+            'html_class': 'critico',
             'peso': 4
             }
         }
@@ -126,6 +127,7 @@ class Sala:
         modulos = [ m.to_json() for m in self.modulos ]
         modulos = sorted(modulos, key=lambda k: k['estado']['peso'], reverse=True)
         return {
+                'id': self.id,
                 'label': self.get_nome(),
                 'link_to_mapa': self.get_mapa_link(),
                 'peso': self.get_peso(),
@@ -173,11 +175,9 @@ class Modulo:
         sensores = [l.to_json() for l in self.leituras]
         sensores = sorted(sensores, key=lambda k: k['estado']['peso'], reverse=True)
         return {
+                'id': self.id,
                 'label': u'Módulo %02d' % self.id,
                 'estado': self.estado,
-                'style': {
-                    'cor': self.estado['cor']
-                    },
                 'sensores': sensores
                 }
 
@@ -225,5 +225,5 @@ class Sensor:
         return {
                 'nome': self.name,
                 'valor': self.value,
-                'estado': self.estado
+                'estado': self.estado,
                 }

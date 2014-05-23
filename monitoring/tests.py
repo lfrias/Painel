@@ -98,5 +98,5 @@ class TestModulo(TestCase):
     def test_json(self):
         modulo = Sala(1).get_modulo(1)
         json = modulo.to_json()
-        self.assertEquals(sorted(json.keys()), sorted(['label', 'sensores', 'estado', 'style']))
+        self.assertEquals(sorted(json.keys()), sorted(['label', 'sensores', 'estado']))
 
