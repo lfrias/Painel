@@ -9,7 +9,8 @@ from django.shortcuts import render_to_response
 from bd import BD, LEITURAS
 
 def home(request):
-    return render_to_response('painel.html')
+    salas = [Sala(i) for i in BD.keys()]
+    return render_to_response('painel.html', {'salas': salas})
 
 ATIVO = 0
 AGUARDO_DE_CONDICOES = 1
