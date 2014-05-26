@@ -17,22 +17,28 @@ salas = Sala.objects.all()
 
 # adicionando condicoes H-209
 salas[0].condicaorange_set.create(interesse="temperatura",
+								  tipo="range",
 								  min=10.0, max = 40.0)
 salas[0].condicaobool_set.create(interesse="fumaca",
+							     tipo="bool",
 								 valor_critico = True)
 salas[0].condicaorange_set.create(interesse="umidade",
+							      tipo="range",
 								  min=10.0, max = 50.0)
 
 # adicionando condicoes H-210
 salas[1].condicaorange_set.create(interesse="temperatura",
+								  tipo="range",
 								  min=10.0, max = 25.0)
 
 # adicionando condicoes sala H-211
 salas[2].condicaorange_set.create(interesse="temperatura",
+							      tipo="range",
 								  min=10.0, max = 25.0)
 
 # adicionando condicoes sala H-219
 salas[4].condicaorange_set.create(interesse="temperatura",
+							      tipo="range",
 								  min=10.0, max = 30.0)
 
 # adicionando modulos

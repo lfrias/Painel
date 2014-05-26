@@ -6,12 +6,19 @@ import logging
 log = logging.getLogger(__name__)
 from django.shortcuts import render
 from django.shortcuts import render_to_response
-from bd import BD, LEITURAS
+from api import API
+from monitoring.models import Sala, Modulo, Leitura, CondicaoBool, CondicaoRange
+
 
 def home(request):
-    salas = [Sala(i).to_json() for i in BD.keys()]
+    # Pega modelos do banco de dados e inicializa objetos correspondentes
+    salas = [SalaControl(sala_db).to_json() for sala_db in Sala.objects.all()]
+
+    # Dicionario que sera enviado para o template html
+    # contendo todos os dados para exibicao
     salas = sorted(salas, key=lambda k: k['peso'], reverse=True)
     return render_to_response('painel.html', {'salas': salas})
+
 
 ATIVO = 0
 AGUARDO_DE_CONDICOES = 1
@@ -47,10 +54,12 @@ ESTADOS_MODULOS = {
 class SensorError(Exception):
         pass
 
-class Sala:
+class SalaControl:
 
-    def __init__(self, _id):
-        self.id = _id
+    def __init__(self, sala_db):
+        self.id = sala_db.id
+        self.nome = sala_db.nome
+        self.condicoes = {}
         self.set_cond_op()
         self.set_modulos()
         self.atualizar_estado()
@@ -60,7 +69,7 @@ class Sala:
             if m.id == mid: return m
 
     def get_nome(self):
-        return BD[self.id]['name']
+        return self.nome
 
     def get_peso(self):
         peso = 0
@@ -78,12 +87,11 @@ class Sala:
 
     def set_modulos(self):
         self.modulos = []
-        #modulos = Modulo.objects.filter(sala=self.id)
-        modulos = BD[self.id]['modulos']
-        for mid in modulos:
-            m = Modulo(mid, self)
-            self.set_estado_modulo(m)
-            self.modulos.append(m)
+        modulos_db = Modulo.objects.filter(sala=self.id)
+        for mod_db in modulos_db:
+            mod_control = ModuloControl(mod_db, self)
+            self.set_estado_modulo(mod_control)
+            self.modulos.append(mod_control)
 
     def set_estado_modulo(self, modulo):
         log.debug("Definindo estado para o módulo %d.%d" % (self.id, modulo.id))
@@ -97,8 +105,14 @@ class Sala:
 
             try:
                 critico = self._is_critical(s)
-                if critico: s.set_estado(CRITICO)
-                else:       s.set_estado(ATIVO)
+                if critico: 
+                    s.set_estado(CRITICO)
+                    # salva leitura critica no BD
+                    Leitura(modulo=Modulo.objects.get(id=modulo.id), 
+                            interesse=s.interesse, 
+                            valor=s.valor).save()
+                else:       
+                    s.set_estado(ATIVO)
             except KeyError:
                 s.set_estado(AGUARDO_DE_CONDICOES)
 
@@ -106,22 +120,25 @@ class Sala:
         log.debug(u"Estado do módulo atualizado para: %s" % (modulo.estado['label']))
 
     def _is_critical(self, sensor):
-        condicoes = self.condicoes[sensor.name]
-        tipo, valor_ref = condicoes['type'], condicoes['valor']
-        if tipo == 'bool':
-            if bool(sensor.value) != valor_ref[0]:
+        condicao = self.condicoes[sensor.interesse]
+
+        if condicao.tipo == 'bool':
+            if bool(sensor.valor) == condicao.valor_critico:
                 return True
 
-        if tipo == 'range':
-            valor_min, valor_max = valor_ref
-            sensor_value = float(sensor.value)
-            if sensor_value < valor_min or sensor_value > valor_max:
+        if condicao.tipo == 'range':
+            if float(sensor.valor) < condicao.min or float(sensor.valor) > condicao.max:
                 return True
 
         return False
 
     def set_cond_op(self):
-        self.condicoes = BD[self.id]['condicoes']
+        # Inclui as condicoes booleanas e de range num dicionario
+        # em que a chave eh o interesse da condicao
+        for condicao in CondicaoBool.objects.filter(sala=self.id):
+            self.condicoes[condicao.interesse] = condicao
+        for condicao in CondicaoRange.objects.filter(sala=self.id):
+            self.condicoes[condicao.interesse] = condicao
 
     def to_json(self):
         modulos = [ m.to_json() for m in self.modulos ]
@@ -131,21 +148,35 @@ class Sala:
                 'label': self.get_nome(),
                 'link_to_mapa': self.get_mapa_link(),
                 'peso': self.get_peso(),
-                'condicoes_operacao': self.condicoes,
+                'condicoes_operacao': self.conditions_to_json(),
                 'modulos': modulos
                 }
 
-def get_estado_por_peso(peso):
-    for estado in ESTADOS_MODULOS:
-        if ESTADOS_MODULOS[estado]['peso'] == peso:
-            return estado
+    def conditions_to_json(self):
+        # Converte os objetos Condition em um dicionario
+        # que pode ser entendido no template
+        cond_dict = {}
+        for cond_name in self.condicoes:
+            cond = self.condicoes[cond_name]
+            if cond.tipo == 'bool':
+                cond_dict[cond_name] = {
+                                        'tipo': cond.tipo,
+                                        'valor': cond.valor_critico
+                                       }
+            else:
+                cond_dict[cond_name] = {
+                                        'tipo': cond.tipo,
+                                        'valor': [cond.min, cond.max]
+                                       }
+        return cond_dict
 
-class Modulo:
 
-    def __init__(self, _id, sala):
-        self.id = _id
+class ModuloControl:
+
+    def __init__(self, mod_db, sala_control):
+        self.id = mod_db.id
+        self.sala = sala_control
         self.estado = ESTADOS_MODULOS[AGUARDO_DE_CONDICOES].copy()
-        self.sala = sala
         self.leituras = []
         self.processar_leituras()
 
@@ -162,12 +193,15 @@ class Modulo:
             self.estado = ESTADOS_MODULOS[estado].copy()
 
     def processar_leituras(self):
-        for sensor_name in self.get_all_sensores():
-            l = Sensor(sensor_name, self.sala.id, self.id)
+        # Pega os sensores do dicionario em API.py
+        sensores = self.get_all_sensores()
+        for nome_sensor in sensores.keys():
+            # Instancia um objeto SensorControl para cada sensor
+            l = SensorControl(nome_sensor, sensores[nome_sensor], self)
             self.leituras.append(l)
 
     def get_all_sensores(self):
-        sensores = BD[self.sala.id]['modulos'][self.id]['sensores']
+        sensores = API[self.id]['sensores']
         log.debug(u"Sensores para módulo %d.%d: %s" % (self.sala.id, self.id, sensores))
         return sensores
 
@@ -181,20 +215,21 @@ class Modulo:
                 'sensores': sensores
                 }
 
-class Sensor:
+class SensorControl:
 
-    def __init__(self, interesse, sala_id, modulo_id):
-        self.interesse = interesse
+    def __init__(self, nome, leitura, modulo_control):
+        self.modulo = modulo_control
+        self.nome = nome
+        self.leitura = leitura
         self.estado = ESTADOS_MODULOS[AGUARDO_DE_CONDICOES].copy()
-        self.realizar_leitura(sala_id, modulo_id)
+        self.realizar_leitura()
 
     def set_estado(self, estado):
         log.debug(u"Estado para o sensor %s: %s" % (self.interesse,
             ESTADOS_MODULOS[estado]['label']))
         self.estado = ESTADOS_MODULOS[estado].copy()
 
-    def realizar_leitura(self, sala_id, modulo_id):
-        self.leitura = BD[sala_id]['modulos'][modulo_id]['sensores'][self.interesse]
+    def realizar_leitura(self):
         try:
             self.parse()
         except SensorError:
@@ -202,11 +237,11 @@ class Sensor:
 
     def _parse(self):
         try:
-            self.name = self.leitura['interesse']
-            self.value = self.leitura['valor']
+            self.interesse = self.leitura['interesse']
+            self.valor = self.leitura['valor']
         except:
-            self.name = self.interesse
-            self.value = None
+            self.interesse = self.nome
+            self.valor = None
             raise
 
     def parse(self):
@@ -217,13 +252,18 @@ class Sensor:
             log.debug(u"ERROR: a leitura retornada não pôde ser traduzida. \
                     \n Leitura: %s \n Erro: %s" % (self.leitura, traceback.format_exc()))
             raise SensorError
-        if self.name != self.interesse:
-            log.debug(u"ERROR: interesse %s não é o mesmo da API %s" % (self.name, self.interesse))
+        if self.nome != self.interesse:
+            log.debug(u"ERROR: interesse %s não é o mesmo da API %s" % (self.nome, self.interesse))
             raise SensorError
 
     def to_json(self):
         return {
-                'nome': self.name,
-                'valor': self.value,
+                'nome': self.interesse,
+                'valor': self.valor,
                 'estado': self.estado,
                 }
+
+def get_estado_por_peso(peso):
+    for estado in ESTADOS_MODULOS:
+        if ESTADOS_MODULOS[estado]['peso'] == peso:
+            return estado
