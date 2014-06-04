@@ -11,8 +11,9 @@ from painel.settings import BASE_DIR
 from api import API
 import copy
 import random
+from datetime import datetime
 from monitoring.models import Sala as SalaDB, Modulo as ModuloDB 
-from monitoring.models import Leitura, CondicaoBool, CondicaoRange
+from monitoring.models import Leitura, Estado, CondicaoBool, CondicaoRange
 
 def get_alarm(request):
     fsock = open('%s/alarm.mp3' % BASE_DIR, 'r')
@@ -224,12 +225,24 @@ class Modulo:
     def __init__(self, mod_db, sala):
         self.id = mod_db.id
         self.sala = sala
-        self.estado = ESTADOS_MODULOS[AGUARDO_DE_CONDICOES].copy()
         self.leituras = []
+        self.estado = ESTADOS_MODULOS[AGUARDO_DE_CONDICOES].copy()
+        self.salvar_estado(AGUARDO_DE_CONDICOES)
         self.processar_leituras()
+
 
     def get_peso(self):
         return self.estado['peso']
+
+    def salvar_estado(self, estado):
+    	nomes_estado = ["ativo", "aguardo", "falha", "critico"]
+    	estadoDB, created = Estado.objects.get_or_create(
+    				modulo = ModuloDB.objects.get(id = self.id),
+                  	defaults={'nome': nomes_estado[estado]})
+    	if not created:
+    		estadoDB.nome = nomes_estado[estado]
+    		estadoDB.criado = datetime.now()
+    	estadoDB.save()
 
     def atualizar_estado(self):
         pesos = [s.estado['peso'] for s in self.leituras]
@@ -239,6 +252,7 @@ class Modulo:
         if self.estado['peso'] < maior_peso:
             estado = get_estado_por_peso(maior_peso)
             self.estado = ESTADOS_MODULOS[estado].copy()
+            self.salvar_estado(estado)     
 
     def processar_leituras(self):
         sensores = self.get_all_sensores()

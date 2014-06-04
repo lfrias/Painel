@@ -52,12 +52,15 @@ class Leitura(models.Model):
     	return self.interesse + ": " + str(self.valor)
 
 class Estado(models.Model):
-	modulo = models.ForeignKey(Modulo)
-	nome = models.CharField(max_length = 200)
-	criado = models.DateTimeField(auto_now_add=True)
+    modulo = models.ForeignKey(Modulo)
+    nome = models.CharField(max_length = 200)
+    criado = models.DateTimeField(auto_now_add=True)
 
-	class Meta:
-		db_table = 'estado'
+    class Meta:
+        db_table = 'estado'
+
+    def __str__(self):
+        return "Estado modulo " + str(self.modulo.id) + ": " + self.nome
 
 class Condicao(models.Model):
     sala = models.ForeignKey(Sala)
