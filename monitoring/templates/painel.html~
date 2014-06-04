@@ -132,44 +132,12 @@
                         <li><a href="#"><span class="label label-success">Ativo</span></a></li>
                         <li><a href="#"><span class="label label-info">Aguardando definição</span></a></li>
                     </ul>
+
                     <ul class="nav nav-sidebar condicoes">
-                        {% for sala in salas %}
-                        <li class="hidden" id="condicoes-sala-{{ sala.id }}">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">
-                                        Condições de operação para sala <a href={{ sala.link_to_mapa }}>{{ sala.label }}</a>
-                                    </h3>
-                                </div>
-                                <div class="panel-body sala-body">
-                                    <ul class="list-unstyled">
-                                        {% for sensor, valores in sala.condicoes_operacao.items %}
-                                        <li>
-                                        {{ sensor }} : {{ valores.valor }}
-                                        </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        {% endfor %}
                     </ul>
+
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="salas">
-
-                    <div class="row placeholders">
-                        {% for sala in salas %}
-                            {% if forloop.counter|divisibleby:5 %}
-                                </div>
-                                <div class="row placeholders">
-                            {% endif %}
-                                    {% include "sala_template.html" %}
-                        {% empty %}
-                        <h3><span class="label label-info">Aviso</span> Não foram encontradas salas no sistema</h3>
-                        {% endfor %}
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -180,8 +148,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+        <script src="http://malsup.github.io/jquery.blockUI.js"></script>
         <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
         <script type="text/javascript">
+
+            var Alarm = {
+                play: function() {
+                    var alarm = new Audio('get_alarm');
+                    alarm.play();
+                }
+            }
 
             var Sala = {
                 show_condicoes: function(sala_id) {
@@ -195,13 +171,47 @@
                     var condicoes_id = "#condicoes-" + sala_id;
                     $(condicoes_id).addClass('hidden');
                     $( "body" ).data('sala-selecionada', null);
+                },
+                init: function() {
+                    $("div.sala").click(function(){
+                        var sala_id = $(this).attr('id');
+                        Sala.show_condicoes(sala_id);
+                    });
+                    if ($('div.panel-danger').length) {
+                        Alarm.play();
+                    }
                 }
             };
 
-            $("div.sala").click(function(){
-                var sala_id = $(this).attr('id');
-                Sala.show_condicoes(sala_id);
+            var UI = {
+
+                REFRESH_TIME: 10000,
+
+                init: function() {
+                    this.load_interface();
+                    setInterval(this.load_interface, this.REFRESH_TIME);
+                },
+                load_interface: function() {
+                    var is_done = 0;
+                    $('ul.condicoes').load("condicoes-de-operacao");
+                    $('#salas').load("salas", function() { Sala.init() });
+                }
+
+            }
+
+            $(document).ready(function() {
+                UI.init();
             });
+
+            $( document ).ajaxError(function() {
+                    $('#salas').block({
+                        message: '<h3>Um erro aconteceu, veja se a conexão com a internet está ok. Caso esteja, recarregue essa página.</h3>',
+                    });
+            });
+            $( document ).ajaxSuccess(function() {
+                    $('#salas').unblock();
+            });
+
             $(document).mouseup(function (e){
                 var sala_id = $( "body" ).data('sala-selecionada');
                 if (!sala_id) return false;
@@ -212,6 +222,7 @@
                     Sala.hide_condicoes(sala_id);
                 }
             });
+
         </script>
     </body>
 </html>

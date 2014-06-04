@@ -1,0 +1,12 @@
+<div class="row placeholders">
+    {% for sala in salas %}
+        {% if forloop.counter|divisibleby:5 %}
+            </div>
+            <div class="row placeholders">
+        {% endif %}
+                {% include "sala_template.html" %}
+    {% empty %}
+    <h3><span class="label label-info">Aviso</span> Não foram encontradas salas no sistema</h3>
+    {% endfor %}
+    </div>
+</div>

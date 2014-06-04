@@ -3,14 +3,26 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "painel.settings")
 from django.conf import settings
 
-from monitoring.models import Sala, Modulo, Leitura, CondicaoBool, CondicaoRange
+from monitoring.models import Edificio, Andar, Sala, Modulo, Leitura, CondicaoBool, CondicaoRange
+
+# adicionando edificio
+edificio = Edificio(nome = "Bloco H",
+		 andar_inicial = 1,
+		 andar_final = 3)
+edificio.save()
+
+# adicionando andar
+andar = Andar(numAndar = 2,
+	  		  planta = "baixa",
+	  		  edificio = edificio)
+andar.save()
 
 # adicionando salas
-Sala(nome = "H-209").save()
-Sala(nome = "H-210").save()
-Sala(nome = "H-211").save()
-Sala(nome = "H-214").save()
-Sala(nome = "H-219").save()
+andar.sala_set.create(nome = "H-209", posicao_x = 0, posicao_y = 0)
+andar.sala_set.create(nome = "H-210", posicao_x = 0, posicao_y = 1)
+andar.sala_set.create(nome = "H-211", posicao_x = 0, posicao_y = 2)
+andar.sala_set.create(nome = "H-214", posicao_x = 1, posicao_y = 0)
+andar.sala_set.create(nome = "H-219", posicao_x = 1, posicao_y = 1)
 
 # pegando salas adicionadas
 salas = Sala.objects.all()

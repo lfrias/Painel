@@ -22,8 +22,8 @@ API = {
                 'valor': '20'
             },
             'umidade': {
-                'interesse': 'umidade-interesse',
-                'valor': '20%'
+                'interesse': 'umidade',
+                'valor': '20'
             },
             'fumaca': {
                 "random"
@@ -62,7 +62,7 @@ API = {
             },
             'umidade': {
                 'interesse': 'umidade',
-                'valor': '30%'
+                'valor': '30'
             }
         }
     },
@@ -82,7 +82,7 @@ API = {
             },
             'umidade': {
                 'interesse': 'umidade',
-                'valor': '30%'
+                'valor': '30'
             }
         }
     },

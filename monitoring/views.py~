@@ -6,12 +6,60 @@ import logging
 log = logging.getLogger(__name__)
 from django.shortcuts import render
 from django.shortcuts import render_to_response
+from painel.settings import BASE_DIR
 from bd import BD, LEITURAS
+import copy
+import random
+
+def get_alarm(request):
+    fsock = open('%s/alarm.mp3' % BASE_DIR, 'r')
+    response = HttpResponse(fsock, mimetype='audio/mpeg')
+    return response
+
+def get_salas( source = BD ):
+    salas = [Sala(i).to_json() for i in source.keys()]
+    salas = sorted(salas, key=lambda k: k['peso'], reverse=True)
+    return salas
+
+def get_new_value(interesse, valor):
+
+    if random.choice([True, False]): return valor
+
+    if interesse == 'umidade':
+        valor = random.randint(0, 100)
+    elif interesse == 'temperatura':
+        valor = random.randint(16, 50)
+    elif interesse == 'fumacao':
+        valor = random.choice(['true', 'false'])
+
+    return str(valor)
+
+def randomize_salas():
+    source = copy.deepcopy(BD)
+
+    for s in BD:
+        modulos = BD[s]['modulos']
+        for m in modulos:
+            sensores = modulos[m]['sensores']
+            for s in sensores:
+                sensor = sensores[s]
+                try:
+                    sensor['valor'] = get_new_value(sensor['interesse'],
+                            sensor['valor'])
+                except:
+                    pass
+
+    return source
 
 def home(request):
-    salas = [Sala(i).to_json() for i in BD.keys()]
-    salas = sorted(salas, key=lambda k: k['peso'], reverse=True)
-    return render_to_response('painel.html', {'salas': salas})
+    return render_to_response('painel.html', {'salas': get_salas()})
+
+def get_salas_html(request):
+    return render_to_response('salas.html',
+            {'salas': get_salas( source = randomize_salas() )})
+
+def get_cond_op_html(request):
+    return render_to_response('condicoes_sala.html', {'salas': get_salas()})
 
 ATIVO = 0
 AGUARDO_DE_CONDICOES = 1
@@ -24,22 +72,22 @@ ATIVO_SALA = 1
 ESTADOS_MODULOS = {
         AGUARDO_DE_CONDICOES: {
             'label': u'Aguardo de Condições',
-            'html_class': 'aguardo-de-condicoes',
+            'html_class': 'panel-info',
             'peso': 1
             },
         ATIVO: {
             'label': u'Ativo',
-            'html_class': 'ativo',
+            'html_class': 'panel-success',
             'peso': 2
             },
         FALHA_DE_OPERACAO: {
             'label': u'Falha de Operação',
-            'html_class': 'falha-operacao',
+            'html_class': 'panel-warning',
             'peso': 3
             },
         CRITICO: {
             'label': u'Crítico',
-            'html_class': 'critico',
+            'html_class': 'panel-danger',
             'peso': 4
             }
         }

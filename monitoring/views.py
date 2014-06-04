@@ -6,19 +6,66 @@ import logging
 log = logging.getLogger(__name__)
 from django.shortcuts import render
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
+from painel.settings import BASE_DIR
 from api import API
-from monitoring.models import Sala, Modulo, Leitura, CondicaoBool, CondicaoRange
+import copy
+import random
+from monitoring.models import Sala as SalaDB, Modulo as ModuloDB 
+from monitoring.models import Leitura, CondicaoBool, CondicaoRange
 
+def get_alarm(request):
+    fsock = open('%s/alarm.mp3' % BASE_DIR, 'r')
+    response = HttpResponse(fsock, mimetype='audio/mpeg')
+    return response
 
-def home(request):
+def get_salas(source = copy.deepcopy(API)):
+    global api
+    api = source
     # Pega modelos do banco de dados e inicializa objetos correspondentes
-    salas = [SalaControl(sala_db).to_json() for sala_db in Sala.objects.all()]
-
+    salas = [Sala(sala_db).to_json() for sala_db in SalaDB.objects.all()]
     # Dicionario que sera enviado para o template html
     # contendo todos os dados para exibicao
     salas = sorted(salas, key=lambda k: k['peso'], reverse=True)
-    return render_to_response('painel.html', {'salas': salas})
+    return salas
 
+def get_new_value(interesse, valor):
+
+    if random.choice([True, False]): return valor
+
+    if interesse == 'umidade':
+        valor = random.randint(0, 100)
+    elif interesse == 'temperatura':
+        valor = random.randint(16, 50)
+    elif interesse == 'fumaca':
+        valor = random.choice(['true', 'false'])
+
+    return str(valor)
+
+def randomize_salas():
+    source = copy.deepcopy(API)
+    for modulo_key in source:
+        modulo = source[modulo_key]
+        for tipo_key in modulo:
+            sensores = modulo[tipo_key]
+            for sensor_key in sensores:
+                sensor = sensores[sensor_key]
+                try:
+                    sensor['valor'] = get_new_value(sensor['interesse'],
+                            sensor['valor'])
+                except:
+                    pass
+    return source
+
+def home(request):
+    return render_to_response('painel.html', {'salas': get_salas()})
+
+def get_salas_html(request):
+    return render_to_response('salas.html',
+            {'salas': get_salas( source = randomize_salas() )})
+
+def get_cond_op_html(request):
+    return render_to_response('condicoes_sala.html', {'salas': get_salas()})
 
 ATIVO = 0
 AGUARDO_DE_CONDICOES = 1
@@ -54,7 +101,7 @@ ESTADOS_MODULOS = {
 class SensorError(Exception):
         pass
 
-class SalaControl:
+class Sala:
 
     def __init__(self, sala_db):
         self.id = sala_db.id
@@ -67,9 +114,6 @@ class SalaControl:
     def get_modulo(self, mid):
         for m in self.modulos:
             if m.id == mid: return m
-
-    def get_nome(self):
-        return self.nome
 
     def get_peso(self):
         peso = 0
@@ -87,11 +131,12 @@ class SalaControl:
 
     def set_modulos(self):
         self.modulos = []
-        modulos_db = Modulo.objects.filter(sala=self.id)
+        #modulos = Modulo.objects.filter(sala=self.id)
+        modulos_db  = ModuloDB.objects.filter(sala=self.id)
         for mod_db in modulos_db:
-            mod_control = ModuloControl(mod_db, self)
-            self.set_estado_modulo(mod_control)
-            self.modulos.append(mod_control)
+            mod = Modulo(mod_db, self)
+            self.set_estado_modulo(mod)
+            self.modulos.append(mod)
 
     def set_estado_modulo(self, modulo):
         log.debug("Definindo estado para o módulo %d.%d" % (self.id, modulo.id))
@@ -107,8 +152,7 @@ class SalaControl:
                 critico = self._is_critical(s)
                 if critico: 
                     s.set_estado(CRITICO)
-                    # salva leitura critica no BD
-                    Leitura(modulo=Modulo.objects.get(id=modulo.id), 
+                    Leitura(modulo=ModuloDB.objects.get(id=modulo.id), 
                             interesse=s.interesse, 
                             valor=s.valor).save()
                 else:       
@@ -145,14 +189,14 @@ class SalaControl:
         modulos = sorted(modulos, key=lambda k: k['estado']['peso'], reverse=True)
         return {
                 'id': self.id,
-                'label': self.get_nome(),
+                'label': self.nome,
                 'link_to_mapa': self.get_mapa_link(),
                 'peso': self.get_peso(),
-                'condicoes_operacao': self.conditions_to_json(),
+                'condicoes_operacao': self.condicoes_to_json(),
                 'modulos': modulos
                 }
 
-    def conditions_to_json(self):
+    def condicoes_to_json(self):
         # Converte os objetos Condition em um dicionario
         # que pode ser entendido no template
         cond_dict = {}
@@ -170,12 +214,16 @@ class SalaControl:
                                        }
         return cond_dict
 
+def get_estado_por_peso(peso):
+    for estado in ESTADOS_MODULOS:
+        if ESTADOS_MODULOS[estado]['peso'] == peso:
+            return estado
 
-class ModuloControl:
+class Modulo:
 
-    def __init__(self, mod_db, sala_control):
+    def __init__(self, mod_db, sala):
         self.id = mod_db.id
-        self.sala = sala_control
+        self.sala = sala
         self.estado = ESTADOS_MODULOS[AGUARDO_DE_CONDICOES].copy()
         self.leituras = []
         self.processar_leituras()
@@ -193,15 +241,14 @@ class ModuloControl:
             self.estado = ESTADOS_MODULOS[estado].copy()
 
     def processar_leituras(self):
-        # Pega os sensores do dicionario em API.py
         sensores = self.get_all_sensores()
-        for nome_sensor in sensores.keys():
+        for tipo_sensor in sensores.keys():
             # Instancia um objeto SensorControl para cada sensor
-            l = SensorControl(nome_sensor, sensores[nome_sensor], self)
+            l = Sensor(tipo_sensor, sensores[tipo_sensor], self)
             self.leituras.append(l)
 
     def get_all_sensores(self):
-        sensores = API[self.id]['sensores']
+        sensores = api[self.id]['sensores']
         log.debug(u"Sensores para módulo %d.%d: %s" % (self.sala.id, self.id, sensores))
         return sensores
 
@@ -215,11 +262,11 @@ class ModuloControl:
                 'sensores': sensores
                 }
 
-class SensorControl:
+class Sensor:
 
-    def __init__(self, nome, leitura, modulo_control):
-        self.modulo = modulo_control
-        self.nome = nome
+    def __init__(self, tipo, leitura, modulo):
+        self.modulo = modulo
+        self.tipo = tipo
         self.leitura = leitura
         self.estado = ESTADOS_MODULOS[AGUARDO_DE_CONDICOES].copy()
         self.realizar_leitura()
@@ -240,7 +287,7 @@ class SensorControl:
             self.interesse = self.leitura['interesse']
             self.valor = self.leitura['valor']
         except:
-            self.interesse = self.nome
+            self.interesse = self.tipo
             self.valor = None
             raise
 
@@ -252,8 +299,8 @@ class SensorControl:
             log.debug(u"ERROR: a leitura retornada não pôde ser traduzida. \
                     \n Leitura: %s \n Erro: %s" % (self.leitura, traceback.format_exc()))
             raise SensorError
-        if self.nome != self.interesse:
-            log.debug(u"ERROR: interesse %s não é o mesmo da API %s" % (self.nome, self.interesse))
+        if self.tipo != self.interesse:
+            log.debug(u"ERROR: interesse %s não é o mesmo da API %s" % (self.tipo, self.interesse))
             raise SensorError
 
     def to_json(self):
@@ -262,8 +309,3 @@ class SensorControl:
                 'valor': self.valor,
                 'estado': self.estado,
                 }
-
-def get_estado_por_peso(peso):
-    for estado in ESTADOS_MODULOS:
-        if ESTADOS_MODULOS[estado]['peso'] == peso:
-            return estado

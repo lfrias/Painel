@@ -1,0 +1,20 @@
+{% for sala in salas %}
+<li class="hidden" id="condicoes-sala-{{ sala.id }}">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Condições de operação para sala <a href={{ sala.link_to_mapa }}>{{ sala.label }}</a>
+            </h3>
+        </div>
+        <div class="panel-body sala-body">
+            <ul class="list-unstyled">
+                {% for sensor, valores in sala.condicoes_operacao.items %}
+                <li>
+                {{ sensor }} : {{ valores.valor }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</li>
+{% endfor %}
